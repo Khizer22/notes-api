@@ -18,14 +18,14 @@ const handleRegister = db => (req,res) =>{
             hash: hash
         })
         .into('users_table')
-        .returning('user_id')
-        .then(userID => {
-            return res.status(200).json(userID[0]); 
+        .returning(['name','email'])
+        .then(data => {
+            return res.status(200).json(data[0]); 
         })
         .then(trx.commit)
         .catch(err => {
             trx.rollback;
-            return res.status(400).json("Unable to register.");
+            return res.status(400).json(err);
         });
     })
         

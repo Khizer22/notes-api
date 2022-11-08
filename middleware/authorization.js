@@ -18,8 +18,6 @@ const requireAuth = (req,res, next) => {
             console.log(err);
             return res.status(401).json(err);
         }
-
-        console.log('passed');
         req.body.email = decoded.email;
         return next();
     });

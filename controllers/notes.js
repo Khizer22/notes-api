@@ -32,8 +32,7 @@ const handleCreateNote = db => (req,res) => {
 
 const handleUpdateNote = db => (req,res) => {
     const id = req.params.id;
-    const {title, text} = req.body.formInput;
-    const {email} = req.body;
+    const {title, text, email} = req.body;
 
     db('notes_table')
         .where({note_id : id, email})
@@ -44,12 +43,12 @@ const handleUpdateNote = db => (req,res) => {
         })
         .then(response => {
             if (response){
-                return res.status(200).json('Success')
+                return res.status(200).json({note_id: id})
             }else{
                 return res.status(400).json('Unable to update note')
             }
         })
-        .catch(err => res.status(400).json("Unable to update note")); 
+        .catch(err => res.status(400).json('Unable to update note')); 
         
 }
 
@@ -59,7 +58,7 @@ const handleDeleteNote = db => (req,res) => {
 
     db.select('*').from('notes_table').where({ note_id: id, email })
     .del()
-    .then(res.status(200).json('Deleted'))
+    .then(res.status(200).json('deleted'))
     .catch(err => res.status(400).json(err));
 
 }
