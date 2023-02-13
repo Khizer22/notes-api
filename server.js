@@ -24,28 +24,15 @@ var allowCrossDomain = function(req,res,next) {
 }
 app.use(allowCrossDomain);
 
-//TEMP TESTING
 const db = knex ({
   client: 'pg',
   connection: {
-    host : '127.0.0.1',
-    port : 5432,
-    user : 'notesuser',
-    password : 'password',
-    database : 'notesdb',
-    ssl: false
-    }
+    connectionString : process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false
+    }      
+  }
 });
-
-// const db = knex ({
-//   client: 'pg',
-//   connection: {
-//     connectionString : process.env.DATABASE_URL,
-//     ssl: {
-//       rejectUnauthorized: false
-//     }      
-//   }
-// });
 
 app.get('/',(req,res) => {
   res.send('getting root');
@@ -63,10 +50,5 @@ const PORT = 5000;
 
 app.listen(PORT,() => {
     //will run after listen happens
-    //console.log(`app is running on port: ${process.env.PORT}`);
     console.log(`app is running on port: ${PORT}`);
 })
-
-// console.log(process.env);
-// const PORT = process.env.PORT;
-// console.log(PORT);
