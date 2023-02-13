@@ -46,9 +46,7 @@ app.post('/note',requireAuth,handleCreateNote(db));
 app.delete('/note/:id',requireAuth,handleDeleteNote(db));
 app.put('/note/:id',requireAuth,handleUpdateNote(db));
 
-const PORT = 5000;
-
-app.listen(PORT,() => {
+app.listen(process.env.PORT,() => {
     //will run after listen happens
-    console.log(`app is running on port: ${PORT}`);
+    console.log(`app is running on port: ${process.env.PORT}`);
 })
